@@ -17,4 +17,3 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/post', [PostsController::class, 'index']);
 Route::get('/post/{id}', [PostsController::class, 'show']);
-Route::get('/noauthor/{id}', [PostsController::class, 'show2']);
