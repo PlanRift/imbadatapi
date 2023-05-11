@@ -13,7 +13,8 @@ class PostsController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth:sanctum'])->only('store');
+        $this->middleware(['auth:sanctum'])->only('store, update');
+        $this->middleware(['pemilik-news'])->only('update');
     }
     public function index()
     {
@@ -53,5 +54,11 @@ class PostsController extends Controller
 
         return new postDetailResource($post->loadMissing('writer'));
 
+    }
+
+    public function update(Request $request, $next)
+    {
+        dd('ini adalah postingan kamu');
+        return $next($request);
     }
 }

@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/post', [PostsController::class, 'index']);
 Route::get('/post/{id}', [PostsController::class, 'show']);
 Route::post('/post', [PostsController::class, 'store']);
+Route::patch('/post/{id}', [PostsController::class, 'update']);
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
