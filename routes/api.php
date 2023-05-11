@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/post', [PostsController::class, 'index']);
 Route::get('/post/{id}', [PostsController::class, 'show']);
+Route::post('/post', [PostsController::class, 'store']);
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/me', [AuthController::class, 'me']);
