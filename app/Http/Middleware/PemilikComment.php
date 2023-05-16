@@ -2,13 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\posts;
+use App\Models\comments;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class PemilikPostingan
+class PemilikComment
 {
     /**
      * Handle an incoming request.
@@ -17,13 +17,13 @@ class PemilikPostingan
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $id_author = posts::findOrFail($request->id);
+        $id_komentator = comments::findOrFail($request->id);
         $user = Auth::user();
 
-        if($id_author->author != $user->id) {
-            return response()->json('kamu bukan pemilik postingan');
+        if($id_komentator->user_id != $user->id){
+            return response()->json(['kamu bukan pemilik komen']);
         }
-        // return response()->json($user);
+
         return $next($request);
     }
-} 
+}

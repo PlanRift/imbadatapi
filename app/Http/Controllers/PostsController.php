@@ -13,8 +13,8 @@ class PostsController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth:sanctum'])->only('store, update');
-        $this->middleware(['pemilik-news'])->only('update');
+        $this->middleware(['auth:sanctum'])->only('store', 'update', 'delete');
+        $this->middleware(['pemilik-news'])->only('update', 'delete');
     }
     public function index()
     {
@@ -67,5 +67,15 @@ class PostsController extends Controller
         $post->update($request->all());
 
         return new PostDetailResource($post->loadMissing('writer'));
+    }
+
+    public function delete($id)
+    {
+        $post = posts::findOrFail($id);
+        $post->delete();
+
+        return response()->json([
+            'message' => 'your post has been deleted'
+        ]);
     }
 }

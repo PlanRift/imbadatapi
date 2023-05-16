@@ -21,9 +21,12 @@ Route::get('/post', [PostsController::class, 'index']);
 Route::get('/post/{id}', [PostsController::class, 'show']);
 Route::post('/post', [PostsController::class, 'store']);
 Route::patch('/post/{id}', [PostsController::class, 'update']);
+Route::delete('/post/{id}', [PostsController::class, 'delete']);
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/me', [AuthController::class, 'me']);
 
 Route::post('/comment', [CommentController::class, 'store']);
+Route::patch('/comment/{id}', [CommentController::class, 'update']);
+Route::delete('/comment/{id}', [CommentController::class, 'delete']);

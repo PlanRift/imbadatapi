@@ -19,7 +19,10 @@ class PostsResource extends JsonResource
             'title'         => $this->title,
             'news_content'  => $this->news_content,
             'writer'        => $this->writer['username'],
+            'total_komentar'=> $this->comments->count(),
+            'komentar'      => CommentResource::collection($this->comments),
             'created_at'    => date_format($this->created_at, "Y/m/d H:i")
+            // 'total_komentar'=> $this->comments->count()
         ];
     }
 }
