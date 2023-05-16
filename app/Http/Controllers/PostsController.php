@@ -56,9 +56,16 @@ class PostsController extends Controller
 
     }
 
-    public function update(Request $request, $next)
+    public function update(Request $request, $id)
     {
-        dd('ini adalah postingan kamu');
-        return $next($request);
+        $request->validate([
+            'title' => 'required|string',
+            'news_content' => 'required|string'
+        ]);
+
+        $post = posts::findOrFail($id);
+        $post->update($request->all());
+
+        return new PostDetailResource($post->loadMissing('writer'));
     }
 }

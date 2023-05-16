@@ -20,10 +20,12 @@ class PemilikPostingan
         $id_author = posts::findOrFail($request->id);
         $user = Auth::user();
 
-        if($id_author->author != $user->id) {
-            return response()->json('kamu bukan pemilik postingan');
-        }
-        return response()->json($user);
+        dd($user);
+
+        // if($id_author->author != $user->id) {
+        //     return response()->json('kamu bukan pemilik postingan');
+        // }
+        // return response()->json($user);
         return $next($request);
     }
 }
