@@ -7,6 +7,7 @@ use App\Http\Resources\PostsResource;
 use App\Models\posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -38,7 +39,15 @@ class PostsController extends Controller
         // return response()->json(['data' => $post]);
 
     }
-
+    function generateRandomString($length = 20) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -46,10 +55,23 @@ class PostsController extends Controller
             'news_content' => 'required'
         ]);
 
+        if($request->file) {
+
+            $validated = $request->validate([
+                'file' => 'mimes:jpg,jpeg,png|max:100000'
+            ]);
+
+            $filename = $this->generateRandomString();
+            $extension = $request->file->extension();
+            
+            $path = Storage::putFileAs('image', $request->file, $filename.'.'.$extension);
+        }
+
         $post = posts::create([
             'title' => $request->input('title'),
             'news_content' => $request->input('news_content'),
-            'author' => Auth::user()->id
+            'author' => Auth::user()->id,
+            'image' => $filename.'.'.$extension
         ]);
 
         return new postDetailResource($post->loadMissing('writer'));

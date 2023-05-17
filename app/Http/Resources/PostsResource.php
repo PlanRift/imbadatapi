@@ -18,6 +18,7 @@ class PostsResource extends JsonResource
             'id'            => $this->id,
             'title'         => $this->title,
             'news_content'  => $this->news_content,
+            'image'         => $this->image,
             'writer'        => $this->writer['username'],
             'total_komentar'=> $this->comments->count(),
             'komentar'      => CommentResource::collection($this->comments),
