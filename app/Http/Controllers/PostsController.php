@@ -65,14 +65,21 @@ class PostsController extends Controller
             $extension = $request->file->extension();
             
             $path = Storage::putFileAs('image', $request->file, $filename.'.'.$extension);
+            // $post = posts::create([
+            //     'title' => $request->input('title'),
+            //     'news_content' => $request->input('news_content'),
+            //     'author' => Auth::user()->id,
+            //     'image' => $filename.'.'.$extension
+            // ]);
+            $request['image'] = $filename.'.'.$extension;
+            $request['author'] = Auth::user()->id;
+            $post = posts::create($request->all());
+            
         }
 
-        $post = posts::create([
-            'title' => $request->input('title'),
-            'news_content' => $request->input('news_content'),
-            'author' => Auth::user()->id,
-            'image' => $filename.'.'.$extension
-        ]);
+        $request['image'] = $filename.'.'.$extension;
+            $request['author'] = Auth::user()->id;
+            $post = posts::create($request->all());
 
         return new postDetailResource($post->loadMissing('writer'));
 
